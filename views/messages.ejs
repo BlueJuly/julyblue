@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>home</title>
+
+    <!-- Bootstrap core CSS -->
+   <link href="../stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="../stylesheets/index.css">
+    <!-- Custom styles for this template -->
+    <!--     <link href="../stylesheets/signin.css" rel="stylesheet"> -->
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">    
+    <div class="container-fluid">
+        <a href="/home" class="navbar-brand">Home</a>
+        <a href="/createEvent" class="navbar-brand">Create Event</a>
+        <a href="/myEvents" class="navbar-brand">My Events</a>
+        <a href="/myFriends" class="navbar-brand">My Friends</a>
+        <a href="/messages" class="navbar-brand">Messages</a>
+        <ul class="nav navbar-nav navbar-right">
+        <li><a href="/myProfile">Profile</a></li>
+        </ul>
+    </div>
+  </div>
+
+   
+
+    <div class="col-sm-2"></div>
+
+      <div class="list-group col-sm-8" id="messageList" style="padding-top:20px">
+         <%for(var i=0;i<friendMessages.length;i++){%>
+            <div style="padding-top:10px">
+             <%if(friendMessages[i].status=="accepted"){%>
+                  <li  class="list-group-item friendList"
+                   messageId="<%=friendMessages[i]._id%>" >
+                    <div class="row">
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                      <h5>
+                        Message:
+                      </h5>
+                      </div>
+                      <div class="col-sm-6">
+                        <h5>You have added <%=friendMessages[i].friendName%> as a friend</h5>
+                      </div>    
+                      <div class="col-sm-1"></div>
+                        <button type="button"  class="btn btn-danger deleteButton" messageId="<%=friendMessages[i]._id%>">Delete</button>
+                    </div>
+                  </li>
+                <%}%>
+              <%if(friendMessages[i].type=="friend-added"){%>
+              <li  class="list-group-item active friendList"
+               messageId="<%=friendMessages[i]._id%>" >
+                <div class="row">
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-2">
+                  <h5>
+                    Message:
+                  </h5>
+                  </div>
+                  <div class="col-sm-6">
+                    <h5><%=friendMessages[i].content%></h5>
+                  </div>    
+                  <div class="col-sm-1"></div>
+                    <button type="button"  class="btn btn-danger deleteButton" messageId="<%=friendMessages[i]._id%>">Delete</button>
+                </div>
+              </li>
+            <%}%>
+            <%if(friendMessages[i].status=="unread"){%>
+
+                <%if(friendMessages[i].type=="friend-request"){%>
+                  <li  class="list-group-item active friendList"
+                   messageId="<%=friendMessages[i]._id%>" >
+                    <div class="row">
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                      <h5>
+                        New Message:
+                      </h5>
+                      </div>
+                      <div class="col-sm-6">
+                        <h5><%=friendMessages[i].friendName%> wants to add you as a friend</h5>
+                      </div>    
+                        <button type="button"  class="btn btn-default acceptFriendButton" messageId="<%=friendMessages[i]._id%>" friendId="<%=friendMessages[i].friendId%>">Accept</button>
+                        <button type="button"  class="btn btn-danger deleteButton" messageId="<%=friendMessages[i]._id%>">Delete</button>
+                    </div>
+                  </li>
+                <%}%>
+
+                 <%if(friendMessages[i].type=="event-invite"){%>
+                  <a href="/event?eventId=<%=friendMessages[i].eventId%>" class="list-group-item active eventList"
+                   messageId="<%=friendMessages[i]._id%>">
+                    <div class="row">
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                      <h5>
+                        New Message:
+                      </h5>
+                      </div>
+                      <div class="col-sm-6">
+                        <h5><%=friendMessages[i].friendName%> invites you to the event <%=friendMessages[i].eventTitle%></h5>
+                      </div>    
+                        <div class="col-sm-1"></div>
+                        <button type="button"  class="btn btn-danger deleteButton" messageId="<%=friendMessages[i]._id%>">Delete</button>
+                    </div>
+                  </a>
+                <%}%>
+
+                <%if(friendMessages[i].type=="under-discussion"){%>
+                <a href="/event?eventId=<%=friendMessages[i].eventId%>" class="list-group-item list-group-item-success eventList"
+                eventId="<%=friendMessages[i].eventId%>" messageId="<%=friendMessages[i]._id%>" >
+                  <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-2">
+                    <h5>
+                      New Message:
+                    </h5>
+                    </div>
+                    <div class="col-sm-7">
+                      <h5><%=friendMessages[i].content%></h5>
+                    </div>    
+                      <button type="button"  class="btn btn-danger deleteButton" messageId="<%=friendMessages[i]._id%>">Delete</button>
+                  </div>
+                </a>
+                <%}%>
+
+                <%if(friendMessages[i].type=="event-ongoing"){%>
+                  <a href="/event?eventId=<%=friendMessages[i].eventId%>" class="list-group-item list-group-item-info eventList"
+                  eventId="<%=friendMessages[i].eventId%>" messageId="<%=friendMessages[i]._id%>">
+                    <div class="row">
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                      <h5>
+                        New Message:
+                      </h5>
+                      </div>
+                      <div class="col-sm-7">
+                        <h5><%=friendMessages[i].content%></h5>
+                      </div>    
+                        <button type="button"  class="btn btn-danger deleteButton" messageId="<%=friendMessages[i]._id%>">Delete</button>
+                    </div>
+                  </a>
+                <%}%>
+                <%if(friendMessages[i].type=="event-determined"){%>
+                  <a href="/event?eventId=<%=friendMessages[i].eventId%>" class="list-group-item list-group-item-warning eventList"
+                  eventId="<%=friendMessages[i].eventId%>" messageId="<%=friendMessages[i]._id%>">
+                    <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-2">
+                    <h5>
+                      New Message:
+                    </h5>
+                    </div>
+                    <div class="col-sm-7">
+                      <h5><%=friendMessages[i].content%></h5>
+                    </div>    
+                      <button type="button"  class="btn btn-danger deleteButton" messageId="<%=friendMessages[i]._id%>">Delete</button>
+                  </div>
+                  </a>
+                <%}%>
+                <%if(friendMessages[i].type=="event-cancelled"){%>
+                  <a href="/event?eventId=<%=friendMessages[i].eventId%>" class="list-group-item list-group-item-danger eventList"
+                  eventId="<%=friendMessages[i].eventId%>" messageId="<%=friendMessages[i]._id%>">
+                    <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-2">
+                    <h5>
+                      New Message:
+                    </h5>
+                    </div>
+                    <div class="col-sm-7">
+                      <h5><%=friendMessages[i].content%></h5>
+                    </div>    
+                      <button type="button"  class="btn btn-danger deleteButton" messageId="<%=friendMessages[i]._id%>">Delete</button>
+                  </div>
+                  </a>
+                <%}%>
+
+            <%}%>
+
+            <%if(friendMessages[i].status=="read"){%>
+                <%if(friendMessages[i].type=="under-discussion"||friendMessages[i].type=="event-ongoing"||friendMessages[i].type=="event-determined"||friendMessages[i].type=="event-cancelled"){%>
+                <a href="/event?eventId=<%=friendMessages[i].eventId%>" class="list-group-item eventList"
+                eventId="<%=friendMessages[i].eventId%>" messageId="<%=friendMessages[i]._id%>" >
+                  <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-2">
+                    <h5>
+                      Message:
+                    </h5>
+                    </div>
+                    <div class="col-sm-7">
+                      <h5><%=friendMessages[i].content%></h5>
+                    </div>    
+                      <button type="button"  class="btn btn-danger deleteButton" messageId="<%=friendMessages[i]._id%>">Delete</button>
+                  </div>
+                </a>
+                <%}%>
+
+                <%if(friendMessages[i].type=="event-invite"){%>
+                  <a href="/event?eventId=<%=friendMessages[i].eventId%>" class="list-group-item  eventList"
+                   messageId="<%=friendMessages[i]._id%>">
+                    <div class="row">
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                      <h5>
+                        Message:
+                      </h5>
+                      </div>
+                      <div class="col-sm-6">
+                        <h5><%=friendMessages[i].friendName%> invites you to the event <%=friendMessages[i].eventTitle%></h5>
+                      </div>    
+                        <div class="col-sm-1"></div>
+                        <button type="button"  class="btn btn-danger deleteButton" messageId="<%=friendMessages[i]._id%>">Delete</button>
+                    </div>
+                  </a>
+                <%}%>
+
+
+            <%}%>
+            </div>
+         <%}%>
+    </div>
+    <div class="col-sm-2"></div>
+
+   
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/javascripts/bootstrap/js/bootstrap.min.js"></script>
+    <script language="javascript">
+     $(function(){
+      $('.eventList').click(function(){
+        console.log($(this).attr("messageId"))
+            $.post("/messages/readMessage",{messageId:$(this).attr("messageId")})
+             .done(
+              function(res){
+                console.log("Message has been read");
+              }
+              )
+      })
+
+      $('.deleteButton').click(function(){
+        console.log($(this).attr("messageId"));
+        $(this).parents('.eventList').hide();
+        $(this).parents('.friendList').hide();
+        $.post("/messages/deleteMessage",{messageId:$(this).attr("messageId")})
+             .done(
+              function(res){
+                console.log("Message has been read");
+              }
+              )
+        return false;
+      })
+
+       $('.acceptFriendButton').click(function(){
+        console.log($(this).attr("friendId"));
+        //$(this).parents('.eventList').hide();
+        $.post("/messages/acceptFriendRequest",{messageId:$(this).attr("messageId"), requestUserId:$(this).attr("friendId")})
+          .done(
+            function(res){
+              console.log(res);
+              window.location.href="/messages";
+              }
+            )
+          $(this).text("Accepted");
+               
+      })
+
+
+     })
+   
+    </script>
+  </body>
+</html>

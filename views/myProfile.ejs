@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>home</title>
+
+    <!-- Bootstrap core CSS -->
+   <link href="../stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="../stylesheets/index.css">
+    <!-- Custom styles for this template -->
+    <!--     <link href="../stylesheets/signin.css" rel="stylesheet"> -->
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">    
+    <div class="container-fluid">
+        <a href="/home" class="navbar-brand">Home</a>
+        <a href="/createEvent" class="navbar-brand">Create Event</a>
+        <a href="/myEvents" class="navbar-brand">My Events</a>
+        <a href="/myFriends" class="navbar-brand">My Friends</a>
+        <a href="/messages" class="navbar-brand">Messages</a>
+        <ul class="nav navbar-nav navbar-right">
+        <li><a href="/myProfile">Profile</a></li>
+        </ul>
+    </div>
+  </div>
+
+  
+   <ul>
+    </ul>
+    <div class="col-sm-2"></div>
+    <div class="list-group col-sm-8" style="padding-top:40px">
+      <a href="#" class="list-group-item disabled" >
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3">Email</div>
+            <div class="col-sm-3" id="email"></div>
+        </div>
+      </a>
+      <a href="#" class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3"></div>
+          <div class="col-sm-3">Nickname</div>
+          <div class="col-sm-4" id="nickname"></div>
+        </div>
+      </a>
+      <a href="#" class="list-group-item" id="genderListItem" clicked="false">
+        <div class="row">
+          <div class="col-sm-3"></div>
+          <div class="col-sm-3">Gender</div>
+          <div class="col-sm-4" id="gender"></div>
+          <div class="col-sm-4">
+            <!-- <input class="form-control" style="display:none" id="ageInput" placeholder="Please enter your age" autofocus required> -->
+            <select class="form-control" style="display:none" id="genderSelector">
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <button class="btn btn-default" id="updateGenderButton" style="display:none">Update</button>
+          </div>    
+        </div>
+      </a>
+      <a href="#" onclick="false" class="list-group-item" id="ageListItem" clicked="false">
+        <div class="row">
+          <div class="col-sm-3"></div>
+          <div class="col-sm-3">Age</div>
+          <div class="col-sm-4" id="age">
+          </div>
+          <div class="col-sm-4">
+            <input class="form-control" style="display:none" id="ageInput" placeholder="Please enter your age" autofocus required>
+          </div>
+          <div class="col-sm-2">
+            <button class="btn btn-default" id="updateAgeButton" style="display:none">Update</button>
+          </div>         
+        </div>
+      </a>
+      <a href="#" class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3"></div>
+          <div class="col-sm-3">Address</div>
+          <div class="col-sm-4" id="address"></div>
+        </div>
+      </a>
+      <a href="#" class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3"></div>
+          <div class="col-sm-3">School</div>
+          <div class="col-sm-4" id="school">Lakehead</div>
+        </div>
+      </a>
+      <a href="#" class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3"></div>
+          <div class="col-sm-3">Job</div>
+          <div class="col-sm-4" id="job">Student</div>
+        </div>
+      </a>
+      <a href="#" class="list-group-item"><div class="row">
+          <div class="col-sm-3"></div>
+          <div class="col-sm-3">Interests</div>
+          <div class="col-sm-4" id="interests">Sleeping</div>
+        </div></a>
+     
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/javascripts/bootstrap/js/bootstrap.min.js"></script>
+     <script language="javascript">
+     $(document).ready(function(){
+
+          $.ajax({
+            url:"/myProfile/getUserProfileInfo",
+            type:"get"
+          })
+          .done(function(data){
+            console.log("get into ajax");
+            console.log(data.fullname);
+            var emailText=document.createTextNode(data.email);
+            $('#email').append(emailText);
+            var fullnameText=document.createTextNode(data.fullname);
+            $('#nickname').append(fullnameText);
+            
+            var genderText,ageText;
+            if (data.gender!=null) {
+              genderText=document.createTextNode(data.gender);
+            }
+            else{
+              genderText=document.createTextNode("Please update your gender info");
+            }
+            $('#gender').append(genderText);
+
+            if (data.age!=null) {
+              ageText=data.age;
+            }
+            else{
+              ageText="Please update your age info";
+            }
+            $('#age').html(ageText);
+          })
+          .fail(function(data){
+            console.log("not into ajax");
+          })
+          .always(function(data){
+            console.log("always");
+          })
+
+          var update  = function(data) {
+            $.post("/myProfile/updateUserProfileInfo", data)
+            .done(function(res){
+              alert(res);
+            });
+          };
+
+          $('#ageListItem').on("click",function(){
+            if ($('#ageListItem').attr('clicked') == 'false'){
+              $('#age').hide();
+              $('#ageInput').show();
+              $('#updateAgeButton').show();
+              this.setAttribute('clicked', 'true');
+            } else {
+              $('#age').show();
+              $('#ageInput').hide();
+              $('#updateAgeButton').hide();
+              $('#ageListItem').attr('clicked', 'false');
+            }
+          });
+
+          $('#updateAgeButton').click(function() {
+            update({
+              field: 'age',
+              value: $('#ageInput').val()
+            });
+            $('#ageInput').hide();
+            $('#updateAgeButton').hide();
+            $('#age').html($('#ageInput').val());
+            $('#age').show();
+          });
+        });
+
+        $('#genderListItem').on("click",function(){
+            if ($('#genderListItem').attr('clicked') == 'false'){
+              $('#gender').hide();
+              $('#genderSelector').show();
+              $('#updateGenderButton').show();
+              this.setAttribute('clicked', 'true');
+            } else {
+              $('#gender').show();
+              $('#genderSelector').hide();
+              $('#updateGenderButton').hide();
+              $('#genderListItem').attr('clicked', 'false');
+            }
+          });
+
+        $('#genderSelector').change(function(){
+          $('#genderListItem').attr('clicked', 'false');
+        });
+
+        $('#updateGenderButton').click(function() {        
+            $.post("/myProfile/updateUserProfileInfo", {
+              field: 'gender',
+              value: $('#genderSelector').val()
+            })
+            .done(function(res){
+              alert(res);
+            });
+            $('#genderSelector').hide();
+            $('#updateGenderButton').hide();
+            $('#gender').html($('#genderSelector').val());
+            $('#gender').show();
+          });
+     
+          
+
+</script>
+  </body>
+</html>

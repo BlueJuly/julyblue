@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="">
+   <meta name="author" content="">
+   <title>Welcome to Blue July</title>
+
+   <!-- Bootstrap core CSS -->
+   <link href="../stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="../stylesheets/index.css">
+   <!-- Custom styles for this template -->
+   <!--     <link href="../stylesheets/signin.css" rel="stylesheet"> -->
+   <!-- Just for debugging purposes. Don't actually copy this line! -->
+   <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+   <!--[if lt IE 9]>
+     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+   <![endif]-->
+ </head>
+
+ <body >
+   <div class="container">
+     <div class="container">
+
+     <form id="form-signin" class="form-sign" role="form" method="post" action="">
+         <input type="email" class="form-control" placeholder="Email address" name="email" id="emailInput" required autofocus>
+<!--           <label id="msg" style="display:none">User is valid</label>  -->
+<!--          <div class="alert alert-warning" style="display:none;height:20px">This email has not been registered</div> -->
+         <!-- <h3><div id="registerMsg" class="label label-info" style="display:none">This email has not been registered</div></h3> -->
+         <div id="registerMsg" class="alert alert-danger" role="alert" style="display:none; height:34px; margin-bottom:0px; margin-top:4px; padding:7px">This email has not been registered</div>
+         <div class="input-group">
+         <input type="password" class="form-control" placeholder="Password" name="password" id="passwordInput" required>
+         <span class="input-group-btn">
+           <button class="btn btn-default" type="submit">Sign in</button>
+         </span>
+         </div>
+
+
+         <div id="passwordMsg" class="alert alert-danger" style="display:none; height:34px; margin-bottom:0px; margin-top:4px; padding:7px">password is not correct</div>
+
+         <label class="checkbox">
+           <input type="checkbox" value="remember-me"> Remember me
+         </label>
+     </form>
+ 
+     <form id="form-signup" class="form-sign" role="form" method="post" action="">
+         <div class="form-signup-info">
+           <h3>New to BlueJuly? Sign up</h3>
+         </div>
+         <input  class="form-control" placeholder="Full Name" name="fullname" id="fullname" required >
+         <input id="registerEmailInput" type="email" class="form-control" placeholder="Email address" name="email" required>
+         <div id="registerAlert" class="alert alert-danger" role="alert" style="display:none; height:34px; margin-bottom:0px; margin-top:4px; padding:7px">This email has already been registered</div>
+         <div class="input-group">
+           <input id="registerPasswordInput" type="password" class="form-control" placeholder="Password" name="password" required>
+             <span class="input-group-btn">
+               <button class="btn btn-default" type="submit">Sign up</button>
+             </span>
+         </div>
+     </form>
+   </div> <!-- /container --> <!-- /container -->
+<!--   <img src="../images/yeah.jpg" class="thumbnail" style="margin-left:1100px"> -->
+    
+   <!-- Bootstrap core JavaScript
+   ================================================== -->
+   <!-- Placed at the end of the document so the pages load faster -->
+   <script language="javascript"></script>
+   <script src="http://code.jquery.com/jquery.js"></script>
+   <script src="/javascripts/bootstrap/js/bootstrap.min.js"></script>
+   <script language="javascript">
+       $(function(){
+             $("#form-signin").submit(function(){
+                 // alert("submit")
+                 var frm = $(this)
+                 $.ajax({
+                   url: "signin",
+                   data: frm.serialize(),
+                   type: "post"
+                 })
+                 .done(function(data){
+                     //$("#msg").html(data)
+                     //$("#msg").show().css({"color":"#00f"})
+                     //alert(data);
+                     switch(data.signinInfo){
+                       case 1:
+                         // alert("user does not exist");
+                         $("#registerMsg").show();
+                         break;
+                       case 2:
+                         // alert("password is not correct");
+                         $("#passwordMsg").show();
+                         break;
+                        case 3:
+                         window.location="/home";
+                         break;
+                     }
+
+                 })
+                 .fail(function(data){
+                   alert("fail")
+                 })
+                 .always(function(data){
+                   // alert(data);
+                 })
+                 return false
+             })
+         })
+
+          $("#emailInput").focus(
+            function(){
+              $("#registerMsg").hide();
+              $("#passwordMsg").hide();
+              $("#emailInput").val("");
+              $("#passwordInput").val("");
+            }
+              )
+          $("#passwordInput").focus(
+            function(){
+              $("#passwordMsg").hide();
+              $("#passwordInput").val("");
+            }
+              )
+        
+          $("#form-signup").submit(function()
+              {
+                var frm=$(this)
+                $.ajax({
+                  url:"signup",
+                  data:frm.serialize(),
+                  type:"post"
+                })
+                .done(
+                  function(data){
+                    if (data.registerInfo==1) {
+                     // window.setTimeout(function(){
+                        window.location="/home";
+                     // },3000)
+                      
+                    }
+                    else if (data.registerInfo==2) {
+                      $("#registerAlert").show();
+                    };
+                  })
+                .fail(function(date){alert("fail")})
+                .always(function(date){})
+                return false;
+                }
+              )
+
+        $("#registerEmailInput").focus(function(){
+          $("#registerAlert").hide();
+          $("#registerEmailInput").val("");
+          $("#registerPasswordInput").val("");
+        })
+            
+   </script>
+ </body>
+</html>

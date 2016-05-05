@@ -1,0 +1,34 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.form-sign {
+  max-width: 330px;
+}
+
+.form-sign .form-control {
+  position: relative;
+}
+/*.form-sign .form-control:focus {
+  z-index: 3;
+}*/
+
+.form-sign input[type="email"]{
+  margin-top: 5px;
+}
+
+#fullname, .form-sign input [type="password"]{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.input-group {
+ margin-top: 5px;
+}
+
+.form-signup-info h3{
+  color: rgb(92,160,250);
+}
+
+

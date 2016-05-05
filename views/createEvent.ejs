@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Create a new event</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../stylesheets/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/stylesheets/bootstrap/css/bootstrap-tagsinput.css" rel="stylesheet">
+    <link rel="stylesheet"  href="../stylesheets/createEvent.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/timepicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/typeahead/bootstrap-tagsinput.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/typeahead/typeahead.css">
+    <!-- <link rel="stylesheet/less" type="text/css" href="../less/timepicker/bootstrap-datetimepicker.less">
+    <link rel="stylesheet/less" type="text/css" href="../less/timepicker/variables.css"> -->
+
+    <!-- Custom styles for this template -->
+    <!--     <link href="../stylesheets/signin.css" rel="stylesheet"> -->
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">    
+      <div class="container-fluid">
+          <a href="/home" class="navbar-brand">Home</a>
+          <a href="/createEvent" class="navbar-brand">Create Event</a>
+          <a href="/myEvents" class="navbar-brand">My Events</a>
+          <a href="/myFriends" class="navbar-brand">My Friends</a>
+          <a href="/messages" class="navbar-brand">Messages</a>
+          <ul class="nav navbar-nav navbar-right">
+          <li><a href="/myProfile">Profile</a></li>
+          </ul>
+      </div>
+    </div>
+
+    <form id="createEvent" class="form-horizontal" method="post" action="/createEvent" role="form" data-toggle="validator">
+
+        <div class="form-group">
+            <label for="eventTitle" class="col-sm-2 control-label">Title</label>
+            <div class="col-sm-4">
+                <input  class="form-control" name="eventTitle" id="eventTitle" placeholder="Title" required autofocus>
+            </div>
+        </div>
+
+        <div class="form-group" id="eventTypeGroup1">
+            <label  class="col-sm-2 control-label" id="eventTypeLabel1">Type</label>
+           <div class="col-sm-2">
+                <select class="form-control" id="eventType1" name="eventType1">
+                <option selected="selected" disabled="disabled" value="">Please select the event type</option>>
+                </select>
+            </div> 
+        </div>
+        <div class="form-group" id="eventTypeGroup2" style="display:none">
+            <label  class="col-sm-2 control-label" id="eventTypeLabel2"></label>
+            <div class="col-sm-2">
+                <select class="form-control" id="eventType2" name="eventType2">
+                </select>
+            </div>
+        </div>
+        <div class="form-group" id="eventTypeGroup3" style="display:none">
+            <label class="col-sm-2 control-label" id="eventTypeLabel3"></label>
+            <div class="col-sm-2">
+                <select class="form-control" id="eventType3">
+                </select>
+            </div>
+        </div>
+
+        <!-- <div class="form-group">
+            <label for="eventCountry" class="col-sm-2 control-label">Country</label>
+            <div id="typeahead">
+                <div class="col-sm-4">
+                    <input  class="typeahead" id="eventCountry" name="eventCountry" placeholder="Country" required>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="form-group">
+            <label for="eventAddress" class="col-sm-2 control-label">Address</label>
+                <div class="col-sm-4">
+                  <div class="input-group">
+                      <input  class="form-control" id="eventAddress-0" name="eventAddress" placeholder="Address">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" id="addAddressButton" type="button">+</button>
+                      </span>
+                  </div>
+                </div>
+        </div>
+
+        <div id="addressHolder"></div>
+
+        
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">Time</label>
+                <div class="col-sm-4">
+                          <div class='input-group date' id='datetimepicker1' >
+                              <input type='text' name="eventTime" class="form-control" />
+                              <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                              </span>
+                              <span class="input-group-btn">
+                                <button class="btn btn-default" id="addTimeButton" type="button">+</button>
+                              </span>
+                          </div>
+                </div>        
+        </div>
+
+        <div id="timeHolder"></div>
+        <!-- <div class="form-group">
+            <label  class="col-sm-2 control-label"></label>
+            <label  class="col-sm-1 control-label">End</label>
+                <div class="col-sm-2">
+                          <div class='input-group date' id='datetimepicker2' >
+                              <input type='text' name="eventEndTime" class="form-control" / required>
+                              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                              </span>
+                          </div>
+                </div>        
+        </div> -->
+   <!--     <div class="form-group">
+            <label for="eventCost" class="col-sm-2 control-label">Invite</label>
+            <div class="col-sm-4">
+              <input  class="form-control" id="eventInvite" name="eventInvites" placeholder="Friends">
+            </div>
+        </div> -->
+
+        <div class="form-group">
+            <label for="eventCost" class="col-sm-2 control-label">Invite</label>
+            <div class="col-sm-4">
+              <input  class="form-control"  id="testInput" name="testInput" placeholder="Friends">
+            </div>
+        </div>
+
+ 
+              <input  class="form-control"  id="invitesNames" name="invitesNames" placeholder="Friends" style="display:none">
+        
+
+         <div class="form-group">
+            <label  class="col-sm-2 control-label">Deadline</label>
+                <div class="col-sm-4">
+                          <div class='input-group date' id='datetimepicker-deadline' >
+                              <input type='text' name="eventDeadline" class="form-control" />
+                              <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                              </span>
+                          </div>
+                </div>        
+        </div>
+
+        <div class="form-group">
+            <label for="eventRequireNumberMin" class="col-sm-2 control-label">Minumum Friends </label>
+            <div class="col-sm-4">
+              <input  class="form-control" id="eventRequireNumberMin" name="eventRequireNumberMin" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="eventCost" class="col-sm-2 control-label">Cost</label>
+            <div class="col-sm-4">
+              <input  class="form-control" id="eventCost" name="eventCost" placeholder="$">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">Oepn event to public</label>
+            <div class="col-sm-2 checkbox">
+              <label>
+                <input type="radio" name="ifPublic" id="ifPublic1" value="Yes">  Yes
+              </label>
+            </div>
+            <div class="col-sm-2 checkbox">
+              <label>
+                <input type="radio" name="ifPublic" id="ifPublic2" value="No" checked>  No
+              </label>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">Gender</label>
+            <div class="col-sm-2 checkbox">
+              <label>
+                <input type="radio" name="gender" id="gender1" value="General" checked>  General
+              </label>
+            </div>
+            <div class="col-sm-2 checkbox">
+              <label>
+                <input type="radio" name="gender" id="gender2" value="Male">  Male Only
+              </label>
+            </div>
+            <div class="col-sm-2 checkbox">
+              <label>
+                <input type="radio" name="gender" id="gender3" value="Female">  Female Only
+              </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="eventRequireNumberMax" class="col-sm-2 control-label">Maximum Friends </label>
+            <div class="col-sm-4">
+              <input  class="form-control" id="eventRequireNumberMax" name="eventRequireNumberMax" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="eventRequireAgeMin" class="col-sm-2 control-label">Minimum Age </label>
+            <div class="col-sm-4">
+              <input  class="form-control" id="eventRequireAgeMin" name="eventRequireAgeMin" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="eventRequireAgeMax" class="col-sm-2 control-label">Maximum Age </label>
+            <div class="col-sm-4">
+              <input  class="form-control" id="eventRequireAgeMax" name="eventRequireAgeMax" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">Description</label>
+            <div class="col-sm-4">
+              <textarea class="form-control" name="eventDescription" id="eventDispcription" rows="7"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button id="submit" type="submit" class="btn btn-default">Create</button>
+                  </div>
+        </div>
+
+    </form>
+        
+  
+
+      <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script language="javascript"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/javascripts/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/javascripts/bootstrap/timepicker/moment.js"></script>  
+    <script src="/javascripts/bootstrap/timepicker/transition.js"></script>
+    <script src="/javascripts/bootstrap/timepicker/collapse.js"></script>  
+    <script src="/javascripts/bootstrap/timepicker/bootstrap-datetimepicker.js"></script>
+    <script src="/javascripts/bootstrap/typeahead/typeahead.bundle.js"></script>
+    <script src="/javascripts/bootstrap/typeahead/typeahead.jquery.js"></script>
+    <script src="/javascripts/bootstrap/typeahead/bloodhound.js"></script>
+    <script src="/javascripts/bootstrap-tagsinput.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgfMOp6Qvfdp2rctDTdSrFpWbVzVnJkXU&signed_in=true&libraries=places&callback=initAutocomplete"
+        async defer></script>
+
+    <script language="javascript">
+    var adddressNum=0;
+    var eventAddressId="eventAddress-";
+    $(document).ready(function() {
+        $('#addAddressButton').click(function(){
+          adddressNum=adddressNum+1;
+          eventAddressIdTemp=eventAddressId+adddressNum;
+          console.log(eventAddressIdTemp)
+
+            $('#addressHolder').before(
+              '<div class="form-group">'+
+                  '<label  class="col-sm-2 control-label"></label>'+
+                  '<div class="col-sm-4">'+
+                    '<input  class="form-control eventAddress" id="'+eventAddressIdTemp+'"  name="eventAddress" placeholder="Address">'+
+                  '</div>'+
+              '</div>');
+            
+            autocomplete = new google.maps.places.Autocomplete(
+              (document.getElementById(eventAddressIdTemp)),{types: ['geocode']});
+            autocomplete.addListener('place_changed');
+            }
+         )
+
+        $('#addTimeButton').click(function(){
+            $('#timeHolder').before(
+              '<div class="form-group">'+
+                      '<div class="col-sm-2"></div>'+
+                      '<div class="col-sm-3">'+
+                                '<div class="input-group date" id="datetimepicker2" >'+
+                                    '<input type="text" name="eventTime" class="form-control" />'+
+                                    '<span class="input-group-addon">'+
+                                      '<span class="glyphicon glyphicon-calendar"></span>'+
+                                    '</span>'+
+                                '</div>'+
+                      '</div>'+        
+              '</div>');
+            $(".date").datetimepicker();
+            }
+         )
+
+        $.ajax({
+                url: "/createEvent/getAllEventTypes",
+                type: "get"
+            })
+            .done(function(data) {
+                console.log("get into ajax");
+                var eventTypeLevel = 0;
+
+                for (var num = 0; num < data.length; num++) {
+
+                    var eventTypeOption = document.createElement("option");
+                    var eventTypeOptionText = document.createTextNode(data[num].typeName);
+                    eventTypeOption.appendChild(eventTypeOptionText);
+
+                    $('#eventType1').append(eventTypeOption);
+                }
+
+                $('#eventType1').change(function() {
+                    $('#eventType2').empty();
+                    var selectedEventTypeIndex = document.getElementById("eventType1").selectedIndex - 1;
+                    if (selectedEventTypeIndex >= 0 && data[selectedEventTypeIndex].children[0] != null) {
+                        for (var num = 0; num < data[selectedEventTypeIndex].children.length; num++) {
+                            var eventTypeOption = document.createElement("option");
+                            var eventTypeOptionText = document.createTextNode(data[selectedEventTypeIndex].children[num].typeName);
+                            eventTypeOption.appendChild(eventTypeOptionText);
+
+                            $('#eventType2').append(eventTypeOption);
+                            $('#eventTypeGroup2').show();
+                        }
+                    } else {
+                        $('#eventTypeGroup2').hide();
+                    }
+                });
+            })
+            .fail(function(data) {
+                console.log("not into ajax");
+            })
+            .always(function(data) {
+                console.log("always");
+            })
+            // var list1=document.createElement("li");
+            // var attr=document.createAttribute("class");
+            // attr.value="list-group-item";
+            // list1.setAttributeNode(attr);
+            // var listContent=document.createTextNode("test node");
+            // list1.appendChild(listContent);
+            // var listgroup=document.getElementById("list-group");
+            // listgroup.appendChild(list1);
+
+    });
+    $(function() {
+        $('#datetimepicker1').datetimepicker();
+        $('#datetimepicker-deadline').datetimepicker();
+        //$('#datetimepicker2').datetimepicker();
+        // $("#datetimepicker1").on("dp.change", function(e) {
+        //     $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+        // });
+        // $("#datetimepicker2").on("dp.change", function(e) {
+        //     $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+        // });;
+    });
+
+    $(function() {
+        
+
+        var cities = new Bloodhound({
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('content'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          prefetch: {
+
+           url: './myFriends/getMyFriendsJson',
+
+            filter: function(list) { 
+              console.log(list);
+              return $.map(list, function(item) {
+                 console.log(item);
+                 return {
+                    content: item.userName + '  ' + item.email,
+                    name: item.userName,
+                    id: item.userId
+                 };
+              });
+            }
+          }
+        });
+        cities.clearPrefetchCache();
+        cities.initialize();
+       
+        var elt = $('#testInput');
+        elt.tagsinput({
+          itemValue: 'id',
+          itemText: 'name',
+          typeaheadjs: {
+            name: 'cities', 
+            displayKey: 'name',
+            source: cities.ttAdapter()
+          }
+        });
+
+        var changeNames = function(event) {
+           var namesVal = elt.tagsinput('items').map(function(item){
+             return item.name;
+           }).join(',');
+           $("#invitesNames").val( namesVal );
+           console.log($("#invitesNames").val())
+        };
+
+        elt.on('itemAdded', changeNames)
+           .on('itemRemoved', changeNames);
+
+      
+
+        
+        $('.tt-hint').hide();
+
+        // kicks off the loading/processing of `local` and `prefetch`
+        // passing in `null` for the `options` arguments will result in the default
+        // options being used
+        
+    })
+
+
+    var placeSearch, autocomplete;
+    var componentForm = {
+      street_number: 'short_name',
+      route: 'long_name',
+      locality: 'long_name',
+      administrative_area_level_1: 'short_name',
+      country: 'long_name',
+      postal_code: 'short_name'
+    };
+
+    function initAutocomplete() {
+      // Create the autocomplete object, restricting the search to geographical
+      // location types.
+      autocomplete = new google.maps.places.Autocomplete(
+          /** @type {!HTMLInputElement} */(document.getElementById('eventAddress-0')),
+          {types: ['geocode']});
+
+      // When the user selects an address from the dropdown, populate the address
+      // fields in the form.
+      autocomplete.addListener('place_changed');
+    }
+    //   function fillInAddress() {
+    // // Get the place details from the autocomplete object.
+    //     var place = autocomplete.getPlace();
+
+    //     for (var component in componentForm) {
+    //       document.getElementById(component).value = '';
+    //       document.getElementById(component).disabled = false;
+    //     }
+
+    //     // Get each component of the address from the place details
+    //     // and fill the corresponding field on the form.
+    //     for (var i = 0; i < place.address_components.length; i++) {
+    //       var addressType = place.address_components[i].types[0];
+    //       if (componentForm[addressType]) {
+    //         var val = place.address_components[i][componentForm[addressType]];
+    //         document.getElementById(addressType).value = val;
+    //       }
+    //     }
+    //   }
+    function geolocate() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var geolocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          var circle = new google.maps.Circle({
+            center: geolocation,
+            radius: position.coords.accuracy
+          });
+          autocomplete.setBounds(circle.getBounds());
+        });
+      }
+    }
+    </script>
+  </body>
+</html>

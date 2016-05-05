@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>home</title>
+
+    <!-- Bootstrap core CSS -->
+   <link href="../stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="../stylesheets/index.css">
+    <!-- Custom styles for this template -->
+    <!--     <link href="../stylesheets/signin.css" rel="stylesheet"> -->
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">    
+    <div class="container-fluid">
+        <a href="/home" class="navbar-brand">Home</a>
+        <a href="/createEvent" class="navbar-brand">Create Event</a>
+        <a href="/myEvents" class="navbar-brand">My Events</a>
+        <a href="/myFriends" class="navbar-brand">My Friends</a>
+        <a href="/myGroups" class="navbar-brand">My Groups</a>
+        <a href="/messages" class="navbar-brand">Messages</a>
+        <ul class="nav navbar-nav navbar-right">
+        <li><a href="/myProfile">Profile</a></li>
+        </ul>
+    </div>
+  </div>
+          <div class="container-fluid" style="margin-top:20px">
+             <form class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Title</label>
+                  <div class="col-sm-2 control-label" style="color:#337ab7">
+                      <%=singleEvent.eventTitle%>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Current Status</label>
+                  <div class="col-sm-2 control-label" style="color:#337ab7">
+                      <%=singleEvent.eventStatus%>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Type</label>
+                <div class="col-sm-4">
+                     <ul class="nav nav-pills" role="tablist" >
+                       <% for(var i=0; i<singleEvent.eventType.length; i++) {%>
+                          <li role="presentation" >
+                            <a href="#" class="eventType"><%=singleEvent.eventType[i] %> 
+                            </a>
+                          </li>
+                      <% } %>
+                    </ul>
+                  
+                </div>
+              </div>
+
+               <div class="form-group">
+                <label  class="col-sm-2 control-label">Event Owner</label>
+                 
+                    <div class="col-sm-2 control-label">
+                     <span class="label label-primary"><%=singleEvent.eventOwnerName%></span>
+                    </div>
+               </div>
+
+               <div class="form-group">
+                <label  class="col-sm-2 control-label">Event Invites</label>
+                  <% for(var i=0; i<singleEvent.eventInvitesNames.length; i++) {%>
+                     <div class="col-sm-1 control-label">
+                     <span class="label label-primary">
+                     <%=singleEvent.eventInvitesNames[i]%>
+                     </span>
+                    </div>
+                   <% } %>
+               </div>
+
+               <% if(singleEvent.eventStatus=="Under Discussion"){%>
+                  <div class="form-group">
+                    <label  class="col-sm-2 control-label">Event Joined</label>
+                    <% for(var i=0; i<singleEvent.eventJoinedNames.length; i++) {%>
+                       <div class="col-sm-1 control-label">
+                       <span class="label label-primary">
+                       <%=singleEvent.eventJoinedNames[i]%>
+                       </span>
+                      </div>
+                     <% } %>
+                 </div>
+               <%}%>
+
+               <% if(singleEvent.eventStatus=="Ongoing"||singleEvent.eventStatus=="Event Fixed"){%>
+                  <div class="form-group">
+                    <label  class="col-sm-2 control-label">Event Joined</label>
+                    <% for(var i=0; i<singleEvent.eventJoinedFixedNames.length; i++) {%>
+                       <div class="col-sm-1 control-label">
+                       <span class="label label-primary">
+                       <%=singleEvent.eventJoinedFixedNames[i]%>
+                       </span>
+                      </div>
+                     <% } %>
+                 </div>
+               <%}%>
+
+
+               <% if(singleEvent.eventStatus=="Under Discussion"||singleEvent.eventStatus=="Event Cancalled"){%>
+                  <div class="form-group">
+                  <label  class="col-sm-2 control-label">Address</label>
+                  <div class="col-sm-5">
+                    <% for(var i=0; i<singleEvent.eventAddress.length; i++) {%>
+                       <ul class="nav nav-pills" role="tablist" >
+                          <li role="presentation" >
+                            <a href="#" class="addressOption" value="<%= singleEvent.eventAddress[i].option %>" id="<%= singleEvent.eventAddress[i].id %>" clicked="false"><%=singleEvent.eventAddress[i].option %> 
+                              <span class="badge"><%=singleEvent.eventAddress[i].userId.length %></span>
+                            </a>
+                          </li>
+                      </ul>
+                     <% } %>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label  class="col-sm-2 control-label">Time</label>
+                  <div class="col-sm-4">
+                    <% for(var i=0; i<singleEvent.eventTime.length; i++) {%>
+                       <ul class="nav nav-pills" role="tablist" >
+                          <li role="presentation" >
+                            <a href="#" class="timeOption" value="<%= singleEvent.eventTime[i].option %>" id="<%= singleEvent.eventTime[i].id %>" clicked="false"><%=dateFormat(singleEvent.eventTime[i].option, "dddd, mmmm dS, yyyy, h:MM TT") %> 
+                              <span class="badge"><%=singleEvent.eventTime[i].userId.length %></span>
+                            </a>
+                          </li>
+                      </ul>
+                     <% } %>
+                  </div>
+                </div>
+               <%}%>
+
+
+              <% if(singleEvent.eventStatus=="Ongoing"||singleEvent.eventStatus=="Event Fixed"){%>
+                  <div class="form-group">
+                    <label  class="col-sm-2 control-label">Address</label>
+                    <div class="col-sm-4 control-label" style="color:#337ab7">
+                      <%=singleEvent.eventAddressFixed%>
+                    </div>
+                  </div>
+
+
+                <div class="form-group">
+                  <label  class="col-sm-2 control-label">Time</label>
+                    <div class="col-sm-4 control-label" style="color:#337ab7">
+                      <%=dateFormat(singleEvent.eventTimeFixed, "dddd, mmmm dS, yyyy, h:MM TT")%>
+                    </div>
+                  </div>
+               <%}%>
+
+              
+
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Cost</label>
+                 <% if(singleEvent.eventCost==0){ %>
+                    <div class="col-sm-2 control-label" style="color:#337ab7">
+                      Free
+                    </div>
+                 <% } else{%>
+                    <div class="col-sm-2 control-label" style="color:#337ab7">
+                     <%=singleEvent.eventCost%>
+                    </div>
+                 <% } %>
+              </div>
+
+
+              <% if(singleEvent.eventDeadline==null){ %>
+                  <div class="form-group">
+                    <label  class="col-sm-2 control-label">Join Deadline</label>
+                    <div class="col-sm-2 control-label" style="color:#337ab7">
+                      No Deadline
+                    </div>
+                  </div>
+              <%} else{%>
+                  <div class="form-group">
+                    <label  class="col-sm-2 control-label">Join Deadline</label>
+                    <div class="col-sm-3 control-label" style="color:#337ab7">
+                      <%=dateFormat(singleEvent.eventDeadline, "dddd, mmmm dS, yyyy, h:MM TT") %>
+                    </div>
+                  </div>
+               <% } %>
+                
+
+             
+
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Public event</label>
+                <div class="col-sm-2 control-label" style="color:#337ab7">
+                  <%=singleEvent.ifPublic%>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Gender Requirement</label>
+                <div class="col-sm-2 control-label" style="color:#337ab7">
+                  <%=singleEvent.eventRequireGender%>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Age Requirement</label>
+                 <% if(singleEvent.eventRequireAgeMin==0&&singleEvent.eventRequireAgeMax==200){ %>
+                    <div class="col-sm-2 control-label" style="color:#337ab7">
+                      No Limit
+                    </div>
+                 <% } else{%>
+                    <%if(singleEvent.eventRequireAgeMin!=0){%>
+                    <div class="col-sm-2 control-label" style="color:#337ab7">
+                      Min Age <%=singleEvent.eventRequireAgeMin%>
+                    </div>
+                    <%}%>
+                    <%if(singleEvent.eventRequireAgeMax!=200){%>
+                    <div class="col-sm-2 control-label" style="color:#337ab7">
+                      Max Age <%=singleEvent.eventRequireAgeMax%>
+                    </div>
+                    <%}%>
+                 <% } %>
+              </div>
+
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Number of People</label>
+                 <% if(singleEvent.eventRequireNumberMin==1&&singleEvent.eventRequireNumberMax==100000000){ %>
+                    <div class="col-sm-2 control-label" style="color:#337ab7">
+                      No Limit
+                    </div>
+                 <% } else{%>
+                    <%if(singleEvent.eventRequireNumberMin!=1){%>
+                    <div class="col-sm-2 control-label" style="color:#337ab7">
+                      Min Number <%=singleEvent.eventRequireNumberMin%>
+                    </div>
+                    <%}%>
+                    <%if(singleEvent.eventRequireNumberMax!=100000000){%>
+                    <div class="col-sm-2 control-label" style="color:#337ab7">
+                      Max Number <%=singleEvent.eventRequireNumberMax%>
+                    </div>
+                    <%}%>
+                 <% } %>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-5">
+                <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Description</h3>
+                </div>
+                <div class="panel-body">
+                  <%=singleEvent.eventDescription%>
+                </div>
+                </div>
+              </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-2"></div>
+                    <div id="joinButtons">
+                        <button class="btn btn-default col-sm-1" type="button" id="joinButton">Join in</button>
+                        <div class="col-sm-1"></div>
+                        <button class="btn btn-default col-sm-1" type="button" id="refuseButton">Refuse</button>
+                    </div>
+                    <div id="joinedButtons" style="display:none">
+                      <button class="btn btn-default col-sm-1"  type="button" id="quitButton">Quit</button>
+                      <div class="col-sm-1"></div>
+                      <button class="btn btn-default col-sm-1"  type="button" id="editButton">Edit</button>
+                    </div>
+                   
+                </div>
+              </div>
+                
+            </form>
+          
+          </div>
+           <!-- <div id="eventDescription">Title : <%=singleEvent.eventDescription%></div> -->
+        <!-- <input class="form-control" id="test2"> -->
+   
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/javascripts/bootstrap/js/bootstrap.min.js"></script>
+    <script language="javascript">
+        $(document).ready(function(){
+
+          var singleEvent={
+            eventOwner:"<%=singleEvent.eventOwner%>",
+            eventJoined:"<%=singleEvent.eventJoined%>",
+            userId:"<%=userId%>", 
+            userName:"<%=userName%>",
+            eventStatus:"<%=singleEvent.eventStatus%>",
+            eventTimeFixed:"<%=singleEvent.eventTimeFixed%>",
+            eventAddressFixed:"<%=singleEvent.eventAddressFixed%>",
+          };
+          console.log(singleEvent.eventAddressFixed);
+          if (singleEvent.eventJoined.split(',').indexOf(singleEvent.userId)>-1) {
+            console.log("joined in Event");
+            $('#joinButtons').hide();
+            $('#joinedButtons').show();
+          }
+          if (singleEvent.eventStatus=="Event Fixed") {
+            $('#joinButtons').hide();
+            //$('#joinedButtons').hide();
+          }
+
+          if (singleEvent.Status=="Event Cancalled") {
+            $('#joinButtons').hide();
+            $('#joinedButtons').hide();
+          };
+          var tt={eventId: "<%=singleEvent._id%>",addressOption:[],timeOption:[]};
+
+          $('.addressOption').on('click', function(e) {
+
+            if ($(this).attr("clicked")=="false") {
+              $(this).attr("clicked", "true");
+              $(this).css({"background-color":"#E1ECF3"})
+              $(this).find("span").html(parseInt($(this).find("span").text())+1)
+              console.log($(this).attr('value'));
+              //tt["addressOption"]=$(this).attr('value');
+              tt.addressOption.push($(this).attr('value'));
+            }
+            else{
+              $(this).attr("clicked", "false");
+              $(this).css({"background-color":"white"});
+              $(this).find("span").html(parseInt($(this).find("span").text())-1);
+              var index=tt.addressOption.indexOf($(this).attr('value'));
+              if(index>-1){
+                tt.addressOption.splice(index, 1);
+              }
+            }
+          });
+
+          $('.timeOption').on('click', function(e) {
+
+            if ($(this).attr("clicked")=="false") {
+              $(this).attr("clicked", "true");
+              $(this).css({"background-color":"#E1ECF3"})
+              $(this).find("span").html(parseInt($(this).find("span").text())+1)
+              console.log($(this).attr('value'));
+              //tt["addressOption"]=$(this).attr('value');
+              tt.timeOption.push($(this).attr('value'));
+            }
+            else{
+              $(this).attr("clicked", "false");
+              $(this).css({"background-color":"white"});
+              $(this).find("span").html(parseInt($(this).find("span").text())-1);
+              var index=tt.timeOption.indexOf($(this).attr('value'));
+              if(index>-1){
+                tt.timeOption.splice(index, 1);
+              }
+            }
+            console.log(tt.timeOption)
+          });
+          
+
+          $("#joinButton").click(function(){
+            
+            if (singleEvent.eventStatus=="Ongoing") {
+              tt.timeOption.push(singleEvent.eventTimeFixed);
+              tt.addressOption.push(singleEvent.eventAddressFixed);
+            };
+            console.log(tt);
+            if (tt.addressOption.length==0||tt.timeOption.length==0) {
+              alert("Please select your time and address option");
+            }
+            else{
+              $.post("/event/joinEvent", {data: JSON.stringify(tt)})
+              .done(
+                  function(res){
+                    console.log(res);
+                    console.log("join in the event")
+                    window.location.href = "/event?eventId="+"<%=singleEvent._id%>";
+                    return false;
+                  }
+                )
+            }    
+          })
+
+          $("#quitButton").click(function(){
+            console.log(tt);
+             $.post("/event/quitEvent", {data: JSON.stringify(tt)})
+              .done(
+                  function(res){
+                    window.location.href = "/event?eventId="+"<%=singleEvent._id%>";
+                    return false;
+                  }
+                )
+          })
+        });
+    </script>
+  </body>
+</html>

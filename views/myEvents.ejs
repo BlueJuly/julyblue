@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>home</title>
+
+    <!-- Bootstrap core CSS -->
+   <link href="../stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="../stylesheets/index.css">
+    <!-- Custom styles for this template -->
+    <!--     <link href="../stylesheets/signin.css" rel="stylesheet"> -->
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">    
+    <div class="container-fluid">
+        <a href="/home" class="navbar-brand">Home</a>
+        <a href="/createEvent" class="navbar-brand">Create Event</a>
+        <a href="/myEvents" class="navbar-brand">My Events</a>
+        <a href="/myFriends" class="navbar-brand">My Friends</a>
+        <a href="/messages" class="navbar-brand">Messages</a>
+        <ul class="nav navbar-nav navbar-right">
+        <li><a href="/myProfile">Profile</a></li>
+        </ul>
+    </div>
+  </div>
+
+           <div class="list-group" id="friendList">
+       <%for(var i=0; i<myEvents.length; i++){%>
+       <div class="col-sm-4" style="margin:auto;padding-top:40px">
+          <%if(myEvents[i].eventStatus=="Under Discussion"){%>
+              <a href="/event?eventId=<%=myEvents[i]._id%>" class="list-group-item list-group-item-success">
+              <h4 class="list-group-item-heading "><%=myEvents[i].eventTitle%></h4>
+              <p>Event Status: 
+                       <%=myEvents[i].eventStatus%> 
+              </p>
+              <p>Event Type: 
+                       <%=myEvents[i].eventType[0]%> <%=myEvents[i].eventType[1]%>
+              </p>
+              <p>Event Owner: 
+                       <span class="label label-primary">
+                       <%=myEvents[i].eventOwnerName%>
+                       </span>
+              </p>
+              <p>Invited Friends: 
+                      <%for(var j=0;j<myEvents[i].eventInvitesNames.length&&j<2;j++){%>
+                       <span class="label label-primary">
+                       <%=myEvents[i].eventInvitesNames[j]%>
+                       </span>
+                       <%}%>
+              </p>
+              <p>Event Deadline: <%=dateFormat(myEvents[i].eventDeadline, "dddd, mmmm dS, yyyy")%></p>
+            </a>
+          <%}%>
+          <%if(myEvents[i].eventStatus=="Ongoing"){%>
+              <a href="/event?eventId=<%=myEvents[i]._id%>" class="list-group-item list-group-item-info">
+              <h4 class="list-group-item-heading "><%=myEvents[i].eventTitle%></h4>
+              <p>Event Status: 
+                       <%=myEvents[i].eventStatus%> 
+              </p>
+              <p>Event Type: 
+                       <%=myEvents[i].eventType[0]%> <%=myEvents[i].eventType[1]%>
+              </p>
+              <p>Event Owner: 
+                       <span class="label label-primary">
+                       <%=myEvents[i].eventOwnerName%>
+                       </span>
+              </p>
+              <p>Invited Friends: 
+                      <%for(var j=0;j<myEvents[i].eventInvitesNames.length&&j<2;j++){%>
+                       <span class="label label-primary">
+                       <%=myEvents[i].eventInvitesNames[j]%>
+                       </span>
+                       <%}%>
+              </p>
+              <p>Event Deadline: <%=dateFormat(myEvents[i].eventDeadline, "dddd, mmmm dS, yyyy")%></p>
+            </a>
+          <%}%>
+
+          <%if(myEvents[i].eventStatus=="Event Fixed"){%>
+              <a href="/event?eventId=<%=myEvents[i]._id%>" class="list-group-item list-group-item-warning">
+              <h4 class="list-group-item-heading "><%=myEvents[i].eventTitle%></h4>
+              <p>Event Status: 
+                       <%=myEvents[i].eventStatus%> 
+              </p>
+              <p>Event Type: 
+                       <%=myEvents[i].eventType[0]%> <%=myEvents[i].eventType[1]%>
+              </p>
+              <p>Event Owner: 
+                       <span class="label label-primary">
+                       <%=myEvents[i].eventOwnerName%>
+                       </span>
+              </p>
+              <p>Invited Friends: 
+                      <%for(var j=0;j<myEvents[i].eventInvitesNames.length&&j<2;j++){%>
+                       <span class="label label-primary">
+                       <%=myEvents[i].eventInvitesNames[j]%>
+                       </span>
+                       <%}%>
+              </p>
+              <p>Event Deadline: <%=dateFormat(myEvents[i].eventDeadline, "dddd, mmmm dS, yyyy")%></p>
+            </a>
+          <%}%>
+          <%if(myEvents[i].eventStatus=="Event Cancalled"){%>
+              <a href="/event?eventId=<%=myEvents[i]._id%>" class="list-group-item list-group-item-danger">
+              <h4 class="list-group-item-heading "><%=myEvents[i].eventTitle%></h4>
+              <p>Event Status: 
+                       <%=myEvents[i].eventStatus%> 
+              </p>
+              <p>Event Type: 
+                       <%=myEvents[i].eventType[0]%> <%=myEvents[i].eventType[1]%>
+              </p>
+              <p>Event Owner: 
+                       <span class="label label-primary">
+                       <%=myEvents[i].eventOwnerName%>
+                       </span>
+              </p>
+              <p>Invited Friends: 
+                      <%for(var j=0;j<myEvents[i].eventInvitesNames.length&&j<2;j++){%>
+                       <span class="label label-primary">
+                       <%=myEvents[i].eventInvitesNames[j]%>
+                       </span>
+                       <%}%>
+              </p>
+              <p>Event Deadline: <%=dateFormat(myEvents[i].eventDeadline, "dddd, mmmm dS, yyyy")%></p>
+            </a>
+          <%}%>
+
+          
+       </div>
+       <%}%>
+    </div>
+        <!-- <input class="form-control" id="test2"> -->
+   
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/javascripts/bootstrap/js/bootstrap.min.js"></script>
+    <script language="javascript">
+ 
+    </script>
+  </body>
+</html>

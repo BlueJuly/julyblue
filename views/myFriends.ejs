@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>home</title>
+
+    <!-- Bootstrap core CSS -->
+   <link href="../stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="../stylesheets/index.css">
+    <!-- Custom styles for this template -->
+    <!--     <link href="../stylesheets/signin.css" rel="stylesheet"> -->
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">    
+    <div class="container-fluid">
+        <a href="/home" class="navbar-brand">Home</a>
+        <a href="/createEvent" class="navbar-brand">Create Event</a>
+        <a href="/myEvents" class="navbar-brand">My Events</a>
+        <a href="/myFriends" class="navbar-brand">My Friends</a>
+        <a href="/messages" class="navbar-brand">Messages</a>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/myProfile">Profile</a></li>
+        </ul>
+        <form class="navbar-form navbar-right" role="search" id="searchFriendsForm">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search" id="searchFriendsInput">
+          </div>
+          <button type="submit" id="searchFriendsButton" class="btn btn-default">Submit</button>
+        </form>
+
+    </div>
+  </div>
+
+
+
+    <div class="list-group" id="friendList">
+       <%for(var i=0; i<user.friends.length; i++){%>
+       <div class="col-sm-4" style="margin:auto;padding-top:40px">
+          <a href="/myEvents/friendEvents?friendId=<%=user.friends[i].userId%>" class="list-group-item list-group-item-info">
+            <h4 class="list-group-item-heading "><%=user.friends[i].userName%></h4>
+            <p><%=user.friends[i].email%></p>
+          </a>
+       </div>
+       <%}%>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/javascripts/bootstrap/js/bootstrap.min.js"></script>
+    <script language="javascript">
+
+    var addFriendRequest =function(user_id){
+      console.log(user_id);
+      $.post("/myFriends/addFriendRequest",{requestToUserId:user_id})
+      .done(
+        function(res){
+          console.log("added new friend request");
+        }
+        )
+    }
+    
+    var createFriendList =function(user){
+      var listGroupItem=$(
+        '<a class="list-group-item" style="padding-top:40px">'+
+          '<div class="row">'+
+            '<div class="col-sm-2"></div>'+
+            '<div class="col-sm-4">'+user.fullname+'</div>'+
+            '<div class="col-sm-4">'+user.email+'</div>'+
+            '<div class="col-sm-2">'+
+              '<button userid="'+ user._id +'" class="btn btn-primary btn-xs add-friend-button">Add Friend</button>'+
+            '</div>'+
+          '</div>'+
+        '</a>'
+        );
+
+      return listGroupItem;
+    }
+
+    var validateEmail=function (email){
+        var emailReg = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        var valid = emailReg.test(email);
+
+        if(!valid) {
+              return false;
+          } else {
+            return true;
+          }
+      }
+
+    $.doc = function(func) {
+      return func.toString().match(/[^]*\/\*([^]*)\*\/\}$/)[1];
+    };
+
+    $(function(){
+
+      $('#searchFriendsForm').submit(function(){
+        
+        if (validateEmail($('#searchFriendsInput').val())) {
+          $.post("/myFriends/searchFriendByEmail",{userEmail:$('#searchFriendsInput').val()})
+        .done(function(res){
+          $('#friendList').empty();
+          $('#friendList').append(createFriendList(res));
+          $('.add-friend-button').on('click', function(){
+              addFriendRequest($(this).attr("userid"));
+              $(this).text("Sent Request");
+            });
+        })
+        }
+        else{
+          $.post("/myFriends/searchFriendsByFullname",{userFullname:$('#searchFriendsInput').val()})
+        .done(function(res){
+          $('#friendList').empty();
+          for (var i = 0; i < res.length; i++) {
+            $('#friendList').append(createFriendList(res[i]));
+            $('.add-friend-button').on('click', function(){
+              addFriendRequest($(this).attr("userid"));
+              $(this).text("Sent Request");
+            });
+          }
+          
+        })
+        }
+        
+        return false;
+      })
+    })
+    </script>
+  </body>
+</html>

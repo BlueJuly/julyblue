@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>home</title>
+
+    <!-- Bootstrap core CSS -->
+   <link href="../stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="../stylesheets/index.css">
+    <!-- Custom styles for this template -->
+    <!--     <link href="../stylesheets/signin.css" rel="stylesheet"> -->
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">    
+    <div class="container-fluid">
+        <a href="/home" class="navbar-brand">Home</a>
+        <a href="/createEvent" class="navbar-brand">Create Event</a>
+        <a href="/myEvents" class="navbar-brand">My Events</a>
+        <a href="/myFriends" class="navbar-brand">My Friends</a>
+        <a href="/messages" class="navbar-brand">Messages</a>
+        <ul class="nav navbar-nav navbar-right">
+        <li><a href="/myProfile">Profile</a></li>
+        </ul>
+    </div>
+  </div>
+  
+  <div class="col-sm-2"></div>
+  <div class="list-group col-sm-8" style="padding-top:20px">
+    <%if(singleEvent.eventStatus=="Under Discussion"){%>
+      <li class="list-group-item list-group-item-success">
+        <div class="row">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4">
+            <h4>Event Title: <%=singleEvent.eventTitle%></h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Type:
+          </div>
+          <div class="col-sm-7">
+            <p> <%=singleEvent.eventType[0]%> <%=singleEvent.eventType[1]%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Status:
+          </div>
+          <div class="col-sm-7">
+            <p> <%=singleEvent.eventStatus%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Owner:
+          </div>
+          <div class="col-sm-8">
+            <div class="col-sm-3">
+            <p>
+              <span class="label label-primary">
+              <%=singleEvent.eventOwnerName%>
+              </span>
+            </p>
+              
+            </div>
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Invited Friends:
+          </div>
+          <div class="col-sm-8">
+            <%for(var x=0;x<singleEvent.eventInvitesNames.length;x++){%>
+              <div class="col-sm-3">
+                <p>
+                  <span class="label label-primary">
+                <%=singleEvent.eventInvitesNames[x]%>
+                </span>
+                </p>
+                
+              </div>
+              
+            <%}%>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Joined Friends:
+          </div>
+          <div class="col-sm-8">
+            <%for(var y=0;y<singleEvent.eventJoinedNames.length;y++){%>
+              <div class="col-sm-3">
+                <p>
+                  <span class="label label-primary">
+                  <%=singleEvent.eventJoinedNames[y]%>
+                  </span>
+                </p>
+              </div>
+              
+            <%}%>
+          </div>
+        </div>
+      </li>
+      <%for(var i=0;i<singleEvent.eventAddress.length;i++){%>
+          <%if(i==0){%>
+              <a href="#" class="list-group-item list-group-item-success addressOption" value="<%= singleEvent.eventAddress[i].option %>" id="<%= singleEvent.eventAddress[i].id %>" clicked="false">
+                <div class="row">
+                  <div class="col-sm-2">
+                  </div>
+                  <div class="col-sm-2">
+                    Event Address:
+                  </div>
+                  <div class="col-sm-7">
+                    <%=singleEvent.eventAddress[i].option%>
+                  </div>
+                  <div class="col-sm-1">
+                    <span class="badge"><%=singleEvent.eventAddress[i].userId.length %></span>
+                  </div>
+                </div>
+              </a>
+          <%} else{%>
+              <a href="#" class="list-group-item list-group-item-success addressOption" value="<%= singleEvent.eventAddress[i].option %>" id="<%= singleEvent.eventAddress[i].id %>" clicked="false">
+                <div class="row">
+                  <div class="col-sm-4"></div>
+                  <div class="col-sm-7">
+                    <%=singleEvent.eventAddress[i].option%>
+                  </div>
+                  <div class="col-sm-1" >
+                    <span class="badge"><%=singleEvent.eventAddress[i].userId.length %></span>
+                  </div>
+                </div>
+              </a>
+            <%}%>
+               
+      <%}%>
+
+      <%for(var j=0;j<singleEvent.eventTime.length;j++){%>
+          <%if(j==0){%>
+              <a href="#" class="list-group-item list-group-item-success timeOption" value="<%= singleEvent.eventTime[j].option %>" id="<%= singleEvent.eventTime[j].id %>" clicked="false">
+                <div class="row">
+                  <div class="col-sm-2">
+                  </div>
+                  <div class="col-sm-2">
+                    Event Time:
+                  </div>
+                  <div class="col-sm-7">
+                    <%=dateFormat(singleEvent.eventTime[j].option, "dddd, mmmm dS, yyyy, h:MM TT") %>
+                  </div>
+                  <div class="col-sm-1">
+                    <span class="badge"><%=singleEvent.eventTime[j].userId.length %></span>
+                  </div>
+                </div>
+              </a>
+          <%} else{%>
+              <a href="#" class="list-group-item list-group-item-success timeOption" value="<%= singleEvent.eventTime[j].option %>" id="<%= singleEvent.eventTime[j].id %>" clicked="false">
+                <div class="row">
+                  <div class="col-sm-4"></div>
+                  <div class="col-sm-7">
+                    <%=dateFormat(singleEvent.eventTime[j].option, "dddd, mmmm dS, yyyy, h:MM TT") %>
+                  </div>
+                  <div class="col-sm-1" >
+                    <span class="badge"><%=singleEvent.eventTime[j].userId.length %></span>
+                  </div>
+                </div>
+              </a>
+            <%}%>
+               
+      <%}%>
+
+    <li class="list-group-item list-group-item-success">
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Public Event:
+          </div>
+          <div class="col-sm-7">
+              <p><%=singleEvent.ifPublic%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Deadline:
+          </div>
+          <div class="col-sm-7">
+              <%if(singleEvent.eventDeadline==null){%>
+              <p>No deadline for this event</p>   
+            <%} else{%>
+              <p><%=dateFormat(singleEvent.eventDeadline, "dddd, mmmm dS, yyyy, h:MM TT") %></p>
+            <%}%> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Cost:
+          </div>
+          <div class="col-sm-7">
+            <%if(singleEvent.eventCost==0){%>
+              <p>Free</p>   
+            <%} else{%>
+              <p><%=singleEvent.eventCost%></p>
+            <%}%> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Gender:
+          </div>
+          <div class="col-sm-7">
+              <p><%=singleEvent.eventRequireGender%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Age:
+          </div>
+          <div class="col-sm-7">
+              <%if(singleEvent.eventRequireAgeMin==0&&singleEvent.eventRequireAgeMax==200){%>
+              <p>No Age Limte</p>   
+              <%} else{ if(singleEvent.eventRequireAgeMin!=0){%>
+                        <p>Minimum Age: <%=singleEvent.eventRequireAgeMin%></p>
+                      <%} if(singleEvent.eventRequireAgeMax!=200){%>
+                      <p>Minimum Age: <%=singleEvent.eventRequireAgeMax%></p>
+                      <%}%>
+                
+              <%}%> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-3">
+            Number of People:
+          </div>
+          <div class="col-sm-7">
+              <%if(singleEvent.eventRequireNumberMin==-1&&singleEvent.eventRequireNumberMax==100000000){%>
+              <p>No Limte</p>   
+              <%} else{ if(singleEvent.eventRequireNumberMin!=-1){%>
+                        <p>Minimum Number: <%=singleEvent.eventRequireNumberMin%></p>
+                      <%} if(singleEvent.eventRequireNumberMax!=100000000){%>
+                      <p>Maximum Number: <%=singleEvent.eventRequireNumberMax%></p>
+                      <%}%>
+                
+              <%}%> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Description:
+          </div>
+          <div class="col-sm-7"> 
+              <p><%=singleEvent.eventDescription%></p>   
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item list-group-item-success" id="joinList">
+      <div class="row">
+        <div class="col-sm-2"></div>
+          <button type="button" id="joinButton" class="btn btn-primary col-sm-8">Join Event</button>
+      </div>
+      </li>
+      <li class="list-group-item list-group-item-success" id="quitList" style="display:none">
+      <div class="row">
+        <div class="col-sm-2"></div>
+          <button type="button" id="quitButton" class="btn btn-danger col-sm-8">Quit Event</button>
+      </div>
+      </li>
+      <li class="list-group-item list-group-item-success" id="deleteList" style="display:none">
+      <div class="row">
+        <div class="col-sm-2"></div>
+          <button type="button" id="deleteButton" class="btn btn-danger col-sm-8">Delete Event</button>
+      </div>
+      </li>
+     
+    <%}%>
+
+
+    <%if(singleEvent.eventStatus=="Ongoing"){%>
+      <li class="list-group-item list-group-item-info">
+        <div class="row">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4">
+            <h4>Event Title: <%=singleEvent.eventTitle%></h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Type:
+          </div>
+          <div class="col-sm-7">
+            <p> <%=singleEvent.eventType[0]%> <%=singleEvent.eventType[1]%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Status:
+          </div>
+          <div class="col-sm-7">
+            <p> <%=singleEvent.eventStatus%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Owner:
+          </div>
+          <div class="col-sm-8">
+            <div class="col-sm-3">
+            <p>
+              <span class="label label-primary">
+              <%=singleEvent.eventOwnerName%>
+              </span>
+            </p>
+              
+            </div>
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Invited Friends:
+          </div>
+          <div class="col-sm-8">
+            <%for(var x=0;x<singleEvent.eventInvitesNames.length;x++){%>
+              <div class="col-sm-3">
+                <p>
+                  <span class="label label-primary">
+                <%=singleEvent.eventInvitesNames[x]%>
+                </span>
+                </p>
+                
+              </div>
+              
+            <%}%>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Joined Friends:
+          </div>
+          <div class="col-sm-8">
+            <%for(var y=0;y<singleEvent.eventJoinedFixedNames.length;y++){%>
+              <div class="col-sm-3">
+                <p>
+                  <span class="label label-primary">
+                  <%=singleEvent.eventJoinedFixedNames[y]%>
+                  </span>
+                </p>
+              </div>
+              
+            <%}%>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-2">
+          </div>
+          <div class="col-sm-2">
+            Event Address:
+          </div>
+          <div class="col-sm-7">
+          <p><%=singleEvent.eventAddressFixed%></p>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-sm-2">
+          </div>
+          <div class="col-sm-2">
+            Event Time:
+          </div>
+          <div class="col-sm-7">
+          <p>
+            <%=dateFormat(singleEvent.eventTimeFixed, "dddd, mmmm dS, yyyy, h:MM TT") %>
+          </p>
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Public Event:
+          </div>
+          <div class="col-sm-7">
+              <p><%=singleEvent.ifPublic%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Deadline:
+          </div>
+          <div class="col-sm-7">
+              <%if(singleEvent.eventDeadline==null){%>
+              <p>No deadline for this event</p>   
+            <%} else{%>
+              <p><%=dateFormat(singleEvent.eventDeadline, "dddd, mmmm dS, yyyy, h:MM TT") %></p>
+            <%}%> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Cost:
+          </div>
+          <div class="col-sm-7">
+            <%if(singleEvent.eventCost==0){%>
+              <p>Free</p>   
+            <%} else{%>
+              <p><%=singleEvent.eventCost%></p>
+            <%}%> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Gender:
+          </div>
+          <div class="col-sm-7">
+              <p><%=singleEvent.eventRequireGender%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Age:
+          </div>
+          <div class="col-sm-7">
+              <%if(singleEvent.eventRequireAgeMin==0&&singleEvent.eventRequireAgeMax==200){%>
+              <p>No Age Limte</p>   
+              <%} else{ if(singleEvent.eventRequireAgeMin!=0){%>
+                        <p>Minimum Age: <%=singleEvent.eventRequireAgeMin%></p>
+                      <%} if(singleEvent.eventRequireAgeMax!=200){%>
+                      <p>Minimum Age: <%=singleEvent.eventRequireAgeMax%></p>
+                      <%}%>
+                
+              <%}%> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-3">
+            Number of People:
+          </div>
+          <div class="col-sm-7">
+              <%if(singleEvent.eventRequireNumberMin==-1&&singleEvent.eventRequireNumberMax==100000000){%>
+              <p>No Limte</p>   
+              <%} else{ if(singleEvent.eventRequireNumberMin!=-1){%>
+                        <p>Minimum Number: <%=singleEvent.eventRequireNumberMin%></p>
+                      <%} if(singleEvent.eventRequireNumberMax!=100000000){%>
+                      <p>Maximum Number: <%=singleEvent.eventRequireNumberMax%></p>
+                      <%}%>
+                
+              <%}%> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Description:
+          </div>
+          <div class="col-sm-7"> 
+              <p><%=singleEvent.eventDescription%></p>   
+          </div>
+        </div>
+      </li>
+   
+
+      <li class="list-group-item list-group-item-info" id="joinList">
+      <div class="row">
+        <div class="col-sm-2"></div>
+          <button type="button" id="joinButton" class="btn btn-primary col-sm-8">Join Event</button>
+      </div>
+      </li>
+      <li class="list-group-item list-group-item-info" id="quitList" style="display:none">
+      <div class="row">
+        <div class="col-sm-2"></div>
+          <button type="button" id="quitButton" class="btn btn-danger col-sm-8">Quit Event</button>
+      </div>
+      </li>
+      <li class="list-group-item list-group-item-info" id="deleteList" style="display:none">
+      <div class="row">
+        <div class="col-sm-2"></div>
+          <button type="button" id="deleteButton" class="btn btn-danger col-sm-8">Delete Event</button>
+      </div>
+      </li>
+     
+    <%}%>
+
+    <%if(singleEvent.eventStatus=="Event Fixed"){%>
+      <li class="list-group-item list-group-item-warning">
+        <div class="row">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4">
+            <h4>Event Title: <%=singleEvent.eventTitle%></h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Type:
+          </div>
+          <div class="col-sm-7">
+            <p> <%=singleEvent.eventType[0]%> <%=singleEvent.eventType[1]%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Status:
+          </div>
+          <div class="col-sm-7">
+            <p> <%=singleEvent.eventStatus%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Owner:
+          </div>
+          <div class="col-sm-8">
+            <div class="col-sm-3">
+            <p>
+              <span class="label label-primary">
+              <%=singleEvent.eventOwnerName%>
+              </span>
+            </p>
+              
+            </div>
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Invited Friends:
+          </div>
+          <div class="col-sm-8">
+            <%for(var x=0;x<singleEvent.eventInvitesNames.length;x++){%>
+              <div class="col-sm-3">
+                <p>
+                  <span class="label label-primary">
+                <%=singleEvent.eventInvitesNames[x]%>
+                </span>
+                </p>
+                
+              </div>
+              
+            <%}%>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Joined Friends:
+          </div>
+          <div class="col-sm-8">
+            <%for(var y=0;y<singleEvent.eventJoinedFixedNames.length;y++){%>
+              <div class="col-sm-3">
+                <p>
+                  <span class="label label-primary">
+                  <%=singleEvent.eventJoinedFixedNames[y]%>
+                  </span>
+                </p>
+              </div>
+              
+            <%}%>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-2">
+          </div>
+          <div class="col-sm-2">
+            Event Address:
+          </div>
+          <div class="col-sm-7">
+          <p><%=singleEvent.eventAddressFixed%></p>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-sm-2">
+          </div>
+          <div class="col-sm-2">
+            Event Time:
+          </div>
+          <div class="col-sm-7">
+          <p>
+            <%=dateFormat(singleEvent.eventTimeFixed, "dddd, mmmm dS, yyyy, h:MM TT") %>
+          </p>
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Public Event:
+          </div>
+          <div class="col-sm-7">
+              <p><%=singleEvent.ifPublic%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Deadline:
+          </div>
+          <div class="col-sm-7">
+              <%if(singleEvent.eventDeadline==null){%>
+              <p>No deadline for this event</p>   
+            <%} else{%>
+              <p><%=dateFormat(singleEvent.eventDeadline, "dddd, mmmm dS, yyyy, h:MM TT") %></p>
+            <%}%> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Cost:
+          </div>
+          <div class="col-sm-7">
+            <%if(singleEvent.eventCost==0){%>
+              <p>Free</p>   
+            <%} else{%>
+              <p><%=singleEvent.eventCost%></p>
+            <%}%> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Gender:
+          </div>
+          <div class="col-sm-7">
+              <p><%=singleEvent.eventRequireGender%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Age:
+          </div>
+          <div class="col-sm-7">
+              <%if(singleEvent.eventRequireAgeMin==0&&singleEvent.eventRequireAgeMax==200){%>
+              <p>No Age Limte</p>   
+              <%} else{ if(singleEvent.eventRequireAgeMin!=0){%>
+                        <p>Minimum Age: <%=singleEvent.eventRequireAgeMin%></p>
+                      <%} if(singleEvent.eventRequireAgeMax!=200){%>
+                      <p>Minimum Age: <%=singleEvent.eventRequireAgeMax%></p>
+                      <%}%>
+                
+              <%}%> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-3">
+            Number of People:
+          </div>
+          <div class="col-sm-7">
+              <%if(singleEvent.eventRequireNumberMin==-1&&singleEvent.eventRequireNumberMax==100000000){%>
+              <p>No Limte</p>   
+              <%} else{ if(singleEvent.eventRequireNumberMin!=-1){%>
+                        <p>Minimum Number: <%=singleEvent.eventRequireNumberMin%></p>
+                      <%} if(singleEvent.eventRequireNumberMax!=100000000){%>
+                      <p>Maximum Number: <%=singleEvent.eventRequireNumberMax%></p>
+                      <%}%>
+                
+              <%}%> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Description:
+          </div>
+          <div class="col-sm-7"> 
+              <p><%=singleEvent.eventDescription%></p>   
+          </div>
+        </div>
+      </li>
+   
+
+      <li class="list-group-item list-group-item-warning" id="joinList">
+      <div class="row">
+        <div class="col-sm-2"></div>
+          <button type="button" id="joinButton" class="btn btn-primary col-sm-8">Join Event</button>
+      </div>
+      </li>
+      <li class="list-group-item list-group-item-warning" id="quitList" style="display:none">
+      <div class="row">
+        <div class="col-sm-2"></div>
+          <button type="button" id="quitButton" class="btn btn-danger col-sm-8">Quit Event</button>
+      </div>
+      </li>
+
+      <li class="list-group-item list-group-item-warning" id="deleteList" style="display:none">
+      <div class="row">
+        <div class="col-sm-2"></div>
+          <button type="button" id="deleteButton" class="btn btn-danger col-sm-8">Delete Event</button>
+      </div>
+      </li>
+     
+    <%}%>
+
+    <%if(singleEvent.eventStatus=="Event Cancalled"){%>
+      <li class="list-group-item list-group-item-danger">
+        <div class="row">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4">
+            <h4>Event Title: <%=singleEvent.eventTitle%></h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Type:
+          </div>
+          <div class="col-sm-7">
+            <p> <%=singleEvent.eventType[0]%> <%=singleEvent.eventType[1]%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Status:
+          </div>
+          <div class="col-sm-7">
+            <p> <%=singleEvent.eventStatus%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Owner:
+          </div>
+          <div class="col-sm-8">
+            <div class="col-sm-3">
+            <p>
+              <span class="label label-primary">
+              <%=singleEvent.eventOwnerName%>
+              </span>
+            </p>
+              
+            </div>
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Invited Friends:
+          </div>
+          <div class="col-sm-8">
+            <%for(var x=0;x<singleEvent.eventInvitesNames.length;x++){%>
+              <div class="col-sm-3">
+                <p>
+                  <span class="label label-primary">
+                <%=singleEvent.eventInvitesNames[x]%>
+                </span>
+                </p>
+                
+              </div>
+              
+            <%}%>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Joined Friends:
+          </div>
+          <div class="col-sm-8">
+            <%for(var y=0;y<singleEvent.eventJoinedNames.length;y++){%>
+              <div class="col-sm-3">
+                <p>
+                  <span class="label label-primary">
+                  <%=singleEvent.eventJoinedNames[y]%>
+                  </span>
+                </p>
+              </div>
+              
+            <%}%>
+          </div>
+        </div>
+      </li>
+      <%for(var i=0;i<singleEvent.eventAddress.length;i++){%>
+          <%if(i==0){%>
+              <a href="#" class="list-group-item list-group-item-danger addressOption" value="<%= singleEvent.eventAddress[i].option %>" id="<%= singleEvent.eventAddress[i].id %>" clicked="false">
+                <div class="row">
+                  <div class="col-sm-2">
+                  </div>
+                  <div class="col-sm-2">
+                    Event Address:
+                  </div>
+                  <div class="col-sm-7">
+                    <%=singleEvent.eventAddress[i].option%>
+                  </div>
+                  <div class="col-sm-1">
+                    <span class="badge"><%=singleEvent.eventAddress[i].userId.length %></span>
+                  </div>
+                </div>
+              </a>
+          <%} else{%>
+              <a href="#" class="list-group-item list-group-item-danger addressOption" value="<%= singleEvent.eventAddress[i].option %>" id="<%= singleEvent.eventAddress[i].id %>" clicked="false">
+                <div class="row">
+                  <div class="col-sm-4"></div>
+                  <div class="col-sm-7">
+                    <%=singleEvent.eventAddress[i].option%>
+                  </div>
+                  <div class="col-sm-1" >
+                    <span class="badge"><%=singleEvent.eventAddress[i].userId.length %></span>
+                  </div>
+                </div>
+              </a>
+            <%}%>
+               
+      <%}%>
+
+      <%for(var j=0;j<singleEvent.eventTime.length;j++){%>
+          <%if(j==0){%>
+              <a href="#" class="list-group-item list-group-item-danger timeOption" value="<%= singleEvent.eventTime[j].option %>" id="<%= singleEvent.eventTime[j].id %>" clicked="false">
+                <div class="row">
+                  <div class="col-sm-2">
+                  </div>
+                  <div class="col-sm-2">
+                    Event Time:
+                  </div>
+                  <div class="col-sm-7">
+                    <%=dateFormat(singleEvent.eventTime[j].option, "dddd, mmmm dS, yyyy, h:MM TT") %>
+                  </div>
+                  <div class="col-sm-1">
+                    <span class="badge"><%=singleEvent.eventTime[j].userId.length %></span>
+                  </div>
+                </div>
+              </a>
+          <%} else{%>
+              <a href="#" class="list-group-item list-group-item-danger timeOption" value="<%= singleEvent.eventTime[j].option %>" id="<%= singleEvent.eventTime[j].id %>" clicked="false">
+                <div class="row">
+                  <div class="col-sm-4"></div>
+                  <div class="col-sm-7">
+                    <%=dateFormat(singleEvent.eventTime[j].option, "dddd, mmmm dS, yyyy, h:MM TT") %>
+                  </div>
+                  <div class="col-sm-1" >
+                    <span class="badge"><%=singleEvent.eventTime[j].userId.length %></span>
+                  </div>
+                </div>
+              </a>
+            <%}%>
+               
+      <%}%>
+
+    <li class="list-group-item list-group-item-danger">
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Public Event:
+          </div>
+          <div class="col-sm-7">
+              <p><%=singleEvent.ifPublic%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Deadline:
+          </div>
+          <div class="col-sm-7">
+              <%if(singleEvent.eventDeadline==null){%>
+              <p>No deadline for this event</p>   
+            <%} else{%>
+              <p><%=dateFormat(singleEvent.eventDeadline, "dddd, mmmm dS, yyyy, h:MM TT") %></p>
+            <%}%> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Event Cost:
+          </div>
+          <div class="col-sm-7">
+            <%if(singleEvent.eventCost==0){%>
+              <p>Free</p>   
+            <%} else{%>
+              <p><%=singleEvent.eventCost%></p>
+            <%}%> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Gender:
+          </div>
+          <div class="col-sm-7">
+              <p><%=singleEvent.eventRequireGender%></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Age:
+          </div>
+          <div class="col-sm-7">
+              <%if(singleEvent.eventRequireAgeMin==0&&singleEvent.eventRequireAgeMax==200){%>
+              <p>No Age Limte</p>   
+              <%} else{ if(singleEvent.eventRequireAgeMin!=0){%>
+                        <p>Minimum Age: <%=singleEvent.eventRequireAgeMin%></p>
+                      <%} if(singleEvent.eventRequireAgeMax!=200){%>
+                      <p>Minimum Age: <%=singleEvent.eventRequireAgeMax%></p>
+                      <%}%>
+                
+              <%}%> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-3">
+            Number of People:
+          </div>
+          <div class="col-sm-7">
+              <%if(singleEvent.eventRequireNumberMin==-1&&singleEvent.eventRequireNumberMax==100000000){%>
+              <p>No Limte</p>   
+              <%} else{ if(singleEvent.eventRequireNumberMin!=-1){%>
+                        <p>Minimum Number: <%=singleEvent.eventRequireNumberMin%></p>
+                      <%} if(singleEvent.eventRequireNumberMax!=100000000){%>
+                      <p>Maximum Number: <%=singleEvent.eventRequireNumberMax%></p>
+                      <%}%>
+                
+              <%}%> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            Description:
+          </div>
+          <div class="col-sm-7"> 
+              <p><%=singleEvent.eventDescription%></p>   
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item list-group-item-danger" id="deleteList" style="display:none">
+      <div class="row">
+        <div class="col-sm-2"></div>
+          <button type="button" id="deleteButton" class="btn btn-danger col-sm-8">Delete Event</button>
+      </div>
+      </li>
+      
+     
+    <%}%>
+
+  </div>
+           <!-- <div id="eventDescription">Title : <%=singleEvent.eventDescription%></div> -->
+        <!-- <input class="form-control" id="test2"> -->
+   
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/javascripts/bootstrap/js/bootstrap.min.js"></script>
+    <script language="javascript">
+          $(document).ready(function(){
+
+            var singleEvent={
+            eventOwner:"<%=singleEvent.eventOwner%>",
+            eventJoined:"<%=singleEvent.eventJoined%>",
+            userId:"<%=userId%>", 
+            userName:"<%=userName%>",
+            eventStatus:"<%=singleEvent.eventStatus%>",
+            eventTimeFixed:"<%=singleEvent.eventTimeFixed%>",
+            eventAddressFixed:"<%=singleEvent.eventAddressFixed%>",
+          };
+          console.log(singleEvent.eventAddressFixed);
+          var tt={eventId: "<%=singleEvent._id%>",addressOption:[],timeOption:[]};
+          if (singleEvent.eventStatus!="Event Cancalled") {
+            if (singleEvent.eventJoined.split(',').indexOf(singleEvent.userId)>-1) {
+            console.log("joined in Event");
+            $('#joinList').hide();
+            $('#quitList').show();
+          }
+          if (singleEvent.eventStatus=="Event Fixed") {
+            $('#joinList').hide();
+            //$('#joinedButtons').hide();
+          }
+
+
+            
+
+            $('.addressOption').on('click', function(e) {
+            if ($(this).attr("clicked")=="false") {
+              $(this).attr("clicked", "true");
+              $(this).css({"background-color":"#E1ECF3"})
+              $(this).find("span").html(parseInt($(this).find("span").text())+1)
+              console.log($(this).attr('value'));
+              tt.addressOption.push($(this).attr('value'));
+            }
+            else{
+              $(this).attr("clicked", "false");
+              $(this).css({"background-color":"#dff0d8"});
+              $(this).find("span").html(parseInt($(this).find("span").text())-1);
+              var index=tt.addressOption.indexOf($(this).attr('value'));
+              if(index>-1){
+                tt.addressOption.splice(index, 1);
+              }
+            }
+          });
+
+          $('.timeOption').on('click', function(e) {
+
+            if ($(this).attr("clicked")=="false") {
+              $(this).attr("clicked", "true");
+              $(this).css({"background-color":"#E1ECF3"})
+              $(this).find("span").html(parseInt($(this).find("span").text())+1)
+              console.log($(this).attr('value'));
+              //tt["addressOption"]=$(this).attr('value');
+              tt.timeOption.push($(this).attr('value'));
+            }
+            else{
+              $(this).attr("clicked", "false");
+              $(this).css({"background-color":"#dff0d8"});
+              $(this).find("span").html(parseInt($(this).find("span").text())-1);
+              var index=tt.timeOption.indexOf($(this).attr('value'));
+              if(index>-1){
+                tt.timeOption.splice(index, 1);
+              }
+            }
+            console.log(tt)
+          });
+
+           $("#joinButton").click(function(){
+            
+            if (singleEvent.eventStatus=="Ongoing") {
+              tt.timeOption.push(singleEvent.eventTimeFixed);
+              tt.addressOption.push(singleEvent.eventAddressFixed);
+            };
+            console.log(tt);
+            if (tt.addressOption.length==0||tt.timeOption.length==0) {
+              alert("Please select your time and address option");
+            }
+            else{
+              $.post("/event/joinEvent", {data: JSON.stringify(tt)})
+              .done(
+                  function(res){
+                    console.log(res);
+                    console.log("join in the event")
+                  }
+                )
+              setTimeout(function(){
+                window.location.href = "/event?eventId="+"<%=singleEvent._id%>";
+                    return false;
+                  },500)
+              
+            }    
+          })
+
+          $("#quitButton").click(function(){
+            console.log(tt);
+             $.post("/event/quitEvent", {data: JSON.stringify(tt)})
+              .done(
+                  function(res){
+                    
+                  }
+                )
+              setTimeout(function(){
+                window.location.href = "/event?eventId="+"<%=singleEvent._id%>";
+                    return false;
+              },500);
+              
+          })
+        }
+         if (singleEvent.userId==singleEvent.eventOwner) {
+
+            console.log("this is the Owner")
+            $('#deleteList').show();
+            $('#quitList').hide();
+            $('#joinList').hide();
+          };
+          $("#deleteButton").click(function(){
+            console.log("delete event");
+              $.post("/event/deleteEvent", {data: JSON.stringify(tt)})
+              .done(
+                  function(res){
+                    console.log(res);
+                    console.log("delete in the event")
+                 }
+                )  
+              window.location.href = "/myEvents";
+              return false;
+ 
+          })         
+        });
+          
+        
+    </script>
+  </body>
+</html>
